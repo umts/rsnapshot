@@ -28,7 +28,7 @@ template "/etc/sudoers.d/rsnapshot" do
   source "rsnapshot.sudoers.erb"
   owner "root"
   group "root"
-  mode "0644"
+  mode "0440"
 end
 
 ssh_keys = []
