@@ -1,2 +1,2 @@
 Cmnd_Alias  RSNAPSHOT = /usr/bin/rsync
-<%= ['rsnapshot']['client']['username'] %> ALL= NOPASSWD: BACKUP
+<%= node['rsnapshot']['client']['username'] %> ALL= NOPASSWD: BACKUP
