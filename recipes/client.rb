@@ -40,7 +40,7 @@ search(:node, "roles:#{node['rsnapshot']['server_role']}") do |server|
   ssh_keys << "#{prefix} #{server['rsnapshot']['server']['public_key']}"
 end
 
-template "#{home_dir}/.ssh/authorized_keys" do
+template "/home/#{node['rsnapshot']['client']['username']}/.ssh/authorized_keys" do
   source "authorized_keys.erb"
   owner node['rsnapshot']['client']['username']
   group node['rsnapshot']['client']['username']
