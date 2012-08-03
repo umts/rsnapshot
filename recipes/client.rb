@@ -46,6 +46,6 @@ template "/home/#{node['rsnapshot']['client']['username']}/.ssh/authorized_keys"
   group node['rsnapshot']['client']['username']
   mode "0400"
   variables(
-    :ssh_keys => u['ssh_keys']
+    :ssh_keys => ssh_keys
   )
 end
