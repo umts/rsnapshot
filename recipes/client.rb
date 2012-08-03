@@ -2,22 +2,22 @@ include_recipe "rsync"
 include_recipe "openssh"
 include_recipe "sudo"
 
-user ['rsnapshot']['client']['username'] do
+user node['rsnapshot']['client']['username'] do
   comment "System Backup"
   system true
   shell "/bin/bash"
 
-  home "/home/#{['rsnapshot']['client']['username']}"
+  home "/home/#{node['rsnapshot']['client']['username']}"
   supports({:manage_home => true})
 end
 
-directory "/home/#{['rsnapshot']['client']['username']}/.ssh" do
-  owner ['rsnapshot']['client']['username']
-  group ['rsnapshot']['client']['username']
+directory "/home/#{node['rsnapshot']['client']['username']}/.ssh" do
+  owner node['rsnapshot']['client']['username']
+  group node['rsnapshot']['client']['username']
   mode "0700"
 end
 
-cookbook_file "/home/#{['rsnapshot']['client']['username']}/.ssh/validate-command.sh" do
+cookbook_file "/home/#{node['rsnapshot']['client']['username']}/.ssh/validate-command.sh" do
   source "validate-command.sh"
   owner "root"
   group "root"
