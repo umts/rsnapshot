@@ -21,7 +21,7 @@ cookbook_file "/home/#{node['rsnapshot']['client']['username']}/.ssh/validate-co
   source "validate-command.sh"
   owner "root"
   group "root"
-  mode "0644"
+  mode "0755"
 end
 
 template "/etc/sudoers.d/rsnapshot" do
