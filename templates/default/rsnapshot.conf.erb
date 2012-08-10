@@ -61,6 +61,22 @@ du_args			-csh
 # don't span filesystem partitions within a backup point.
 one_fs		1
 
+# support special files (FIFOs, etc) cross-platform.
+link_dest	1
+
+# When sync_first is enabled, it changes the default behaviour of rsnapshot.
+# Normally, when rsnapshot is called with its lowest interval
+# (i.e.: "rsnapshot hourly"), it will sync files AND rotate the lowest
+# intervals. With sync_first enabled, "rsnapshot sync" handles the file sync,
+# and all interval calls simply rotate files. See the man page for more
+# details. The default is 0 (off).
+sync_first	1
+
+# If enabled, rsnapshot will move the oldest directory for each interval
+# to [interval_name].delete, then it will remove the lockfile and delete
+# that directory just before it exits. The default is 0 (off).
+use_lazy_deletes	1
+
 ###########################
 # backup targets          #
 ###########################
