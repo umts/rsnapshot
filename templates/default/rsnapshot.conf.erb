@@ -55,7 +55,7 @@ lockfile	/var/run/rsnapshot.pid
 # Default rsync args. All rsync commands have at least these options set.
 rsync_short_args	-az
 rsync_long_args		--delete --numeric-ids --relative --delete-excluded --stats
-ssh_args		-o BatchMode=yes -i <%= node['rsnapshot']['server']['ssh_key'] %>
+ssh_args		-o BatchMode=yes -i "<%= @ssh_key_location %>"
 du_args			-csh
 
 # don't span filesystem partitions within a backup point.
