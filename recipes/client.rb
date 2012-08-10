@@ -32,12 +32,9 @@ template "/etc/sudoers.d/rsnapshot" do
 end
 
 ssh_keys = []
-search(:node, "roles:#{node['rsnapshot']['server_role']}") do |server|
-  next if server['fqdn'] == node['fqdn']
-  next unless server['rsnapshot']['server']['public_key']
-
+search(:node, "roles:#{node['rsnapshot']['server_role']} AND rsnapshot_server_ssh_key:* NOT name:#{node.name}") do |server|
   prefix = "from=\"#{server['ipaddress']}\",command=\"/home/#{node['rsnapshot']['client']['username']}/.ssh/validate-command.sh\",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty"
-  ssh_keys << "#{prefix} #{server['rsnapshot']['server']['public_key']}"
+  ssh_keys << "#{prefix} #{server['rsnapshot']['server']['ssh_key']}"
 end
 
 template "/home/#{node['rsnapshot']['client']['username']}/.ssh/authorized_keys" do

@@ -24,7 +24,7 @@ end
 
 ruby_block "set public key to node" do
   block do
-    node.set['rsnapshsot']['server']['public_key'] = File.read("#{root_home}/.ssh/id_rsa.pub")
+    node['rsnapshot']['server']['ssh_key'] = File.read("#{root_home}/.ssh/id_rsa.pub").strip
   end
 end
 
