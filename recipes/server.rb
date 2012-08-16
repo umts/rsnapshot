@@ -40,12 +40,12 @@ search(:node, "roles:#{node['rsnapshot']['client_role']}") do |client|
   next unless paths && paths.any?
 
   paths.each do |path|
-    path = path.end_with?("/") ? path : "#{path}/"
+    path = path.end_with?("/") ? Shellwords.escape(path) : "#{Shellwords.escape path}/"
     if client.name == node.name
-      backup_targets << "\"#{path}\"\t\"#{client['fqdn']}#{path}\""
+      backup_targets << "#{path}\t#{client['fqdn']}#{path}"
     else
       # FIXME: What about ipv6?
-      backup_targets << "\"#{client['rsnapshot']['client']['username']}@#{client['ipaddress']}:#{path}\"\t\"#{client['fqdn']}#{path}\""
+      backup_targets << "#{client['rsnapshot']['client']['username']}@#{client['ipaddress']}:#{path}\t#{client['fqdn']}#{path}"
     end
   end
 end
