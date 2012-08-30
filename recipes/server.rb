@@ -35,20 +35,28 @@ directory node['rsnapshot']['server']['snapshot_root'] do
 end
 
 backup_targets = []
+node['rsnapshot']['server']['clients'].each_pair do |fqdn, paths|
+  Array(paths).each do |path|
+    path = path.end_with?("/") ? Shellwords.escape(path) : "#{Shellwords.escape(path)}/"
+    backup_targets << "#{node['rsnapshot']['client']['username']}@#{fqdn}:#{path}\t#{fqdn}/"
+  end
+end
+
 search(:node, "roles:#{node['rsnapshot']['client_role']}") do |client|
   paths = client['rsnapshot']['client']['paths']
   next unless paths && paths.any?
 
   paths.each do |path|
-    path = path.end_with?("/") ? Shellwords.escape(path) : "#{Shellwords.escape path}/"
+    path = path.end_with?("/") ? Shellwords.escape(path) : "#{Shellwords.escape(path)}/"
     if client.name == node.name
-      backup_targets << "#{path}\t#{client['fqdn']}#{path}"
+      backup_targets << "#{path}\t#{client['fqdn']}/"
     else
       # FIXME: What about ipv6?
-      backup_targets << "#{client['rsnapshot']['client']['username']}@#{client['ipaddress']}:#{path}\t#{client['fqdn']}#{path}"
+      backup_targets << "#{client['rsnapshot']['client']['username']}@#{client['ipaddress']}:#{path}\t#{client['fqdn']}/"
     end
   end
 end
+
 template node['rsnapshot']['server']['config_file'] do
   source "rsnapshot.conf.erb"
   owner "root"
