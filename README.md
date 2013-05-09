@@ -11,7 +11,7 @@ This cookbook requires the cron, openssh, rsync, and sudo cookbooks, all
 from the community site.
 
 It also relies on `node['authorization']['sudo']['include_sudoers_d']`
-being  set to `true` on clients, 
+being  set to `true` on clients.
 
 Attributes
 ==========
@@ -65,5 +65,7 @@ These are the defaults:
 
 Recipes
 =======
+This cookbook contains the recipes `rsnapshot::server` and
+`rsnapshot::client`.  There is no default recipe.
 
 [rsnapshot]: http://www.rsnapshot.org/
