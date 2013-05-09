@@ -42,8 +42,8 @@ Server
   on the server.  This "defaults" to `nil`, but is set by the recipe
   from the public key file on the chef run.  Don't set this manualy.
 * `node['rsnapshot']['server']['clients']` - This is a hash of clients
-  that _don't_ have the client role on them.  This might be good if you
-  - for some reason - have some clients that aren't running chef.  The
+  that _don't_ have the client role on them.  This might be good if you -
+  for some reason - have some clients that aren't running chef.  The
   format is `{"fqdn" => ["/array/of/", "/some/paths"]}` and the default
   is an empty hash.
 
