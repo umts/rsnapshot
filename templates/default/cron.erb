@@ -4,10 +4,16 @@
 # Source: rsnapshot::templates/default/cron.erb
 #
 # m h dom mon dow user  command
-<% node['rsnapshot']['server']['intervals']['hourly'].to_i.times do |i| %>
-<% hour = ((24 / node['rsnapshot']['server']['intervals']['hourly'].to_i) * i + 4) % 24 %>
+<% node['rsnapshot']['server']['retain']['hourly'].to_i.times do |i| %>
+<% hour = ((24 / node['rsnapshot']['server']['retain']['hourly'].to_i) * i + 4) % 24 %>
 0   <%= hour %>   * * *   root  /usr/bin/rsnapshot sync && /usr/bin/rsnapshot hourly
 <% end %>
+<% if node['rsnapshot']['server']['retain']['daily'] %>
 30  3    * * *   root  /usr/bin/rsnapshot daily
+<% end %>
+<% if node['rsnapshot']['server']['retain']['weekly'] %>
 0   3    * * 1   root  /usr/bin/rsnapshot weekly
+<% end %>
+<% if node['rsnapshot']['server']['retain']['monthly'] %>
 30  2    1 * *   root  /usr/bin/rsnapshot monthly
+<% end %>
