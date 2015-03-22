@@ -1,0 +1,18 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+  - name: centos-6.5
+
+suites:
+  - name: server
+    run_list:
+      - recipe[rsnapshot::server]
+  - name: client
+    run_list:
+      - recipe[rsnapshot::client]
